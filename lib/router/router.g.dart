@@ -7,16 +7,58 @@ part of 'router.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $homeScreenRoute,
-      $scheduleScreenRoute,
-      $jobsScreenRoute,
-      $settingsScreenRoute,
+      $appShellRouteData,
     ];
 
-RouteBase get $homeScreenRoute => GoRouteData.$route(
-      path: '/',
-      factory: $HomeScreenRouteExtension._fromState,
+RouteBase get $appShellRouteData => StatefulShellRouteData.$route(
+      factory: $AppShellRouteDataExtension._fromState,
+      branches: [
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/',
+              factory: $HomeScreenRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/schedule',
+              factory: $ScheduleScreenRouteExtension._fromState,
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/jobs',
+              factory: $JobsScreenRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'job',
+                  name: 'job',
+                  factory: $JobScreenRouteExtension._fromState,
+                ),
+              ],
+            ),
+          ],
+        ),
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/settings',
+              factory: $SettingsScreenRouteExtension._fromState,
+            ),
+          ],
+        ),
+      ],
     );
+
+extension $AppShellRouteDataExtension on AppShellRouteData {
+  static AppShellRouteData _fromState(GoRouterState state) =>
+      AppShellRouteData();
+}
 
 extension $HomeScreenRouteExtension on HomeScreenRoute {
   static HomeScreenRoute _fromState(GoRouterState state) => HomeScreenRoute();
@@ -34,11 +76,6 @@ extension $HomeScreenRouteExtension on HomeScreenRoute {
 
   void replace(BuildContext context) => context.replace(location);
 }
-
-RouteBase get $scheduleScreenRoute => GoRouteData.$route(
-      path: '/schedule',
-      factory: $ScheduleScreenRouteExtension._fromState,
-    );
 
 extension $ScheduleScreenRouteExtension on ScheduleScreenRoute {
   static ScheduleScreenRoute _fromState(GoRouterState state) =>
@@ -58,11 +95,6 @@ extension $ScheduleScreenRouteExtension on ScheduleScreenRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $jobsScreenRoute => GoRouteData.$route(
-      path: '/jobs',
-      factory: $JobsScreenRouteExtension._fromState,
-    );
-
 extension $JobsScreenRouteExtension on JobsScreenRoute {
   static JobsScreenRoute _fromState(GoRouterState state) => JobsScreenRoute();
 
@@ -80,10 +112,22 @@ extension $JobsScreenRouteExtension on JobsScreenRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-RouteBase get $settingsScreenRoute => GoRouteData.$route(
-      path: '/settings',
-      factory: $SettingsScreenRouteExtension._fromState,
-    );
+extension $JobScreenRouteExtension on JobScreenRoute {
+  static JobScreenRoute _fromState(GoRouterState state) => JobScreenRoute();
+
+  String get location => GoRouteData.$location(
+        '/jobs/job',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
 
 extension $SettingsScreenRouteExtension on SettingsScreenRoute {
   static SettingsScreenRoute _fromState(GoRouterState state) =>

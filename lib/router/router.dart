@@ -1,15 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:job_tracker/screens/home_screen.dart';
-import 'package:job_tracker/screens/jobs_screen.dart';
+import 'package:job_tracker/screens/jobs/job_screen.dart';
+import 'package:job_tracker/screens/jobs/jobs_screen.dart';
 import 'package:job_tracker/screens/schedule_screen.dart';
 import 'package:job_tracker/screens/settings.dart';
+import 'package:job_tracker/widgets/scaffold_with_nested_navigation.dart';
 
 part "router.g.dart";
 
-// TODO: Use StatefullShellRouter.indexedStack
+@TypedStatefulShellRoute<AppShellRouteData>(branches: [
+  TypedStatefulShellBranch(
+    routes: [
+      TypedGoRoute<HomeScreenRoute>(path: '/'),
+    ],
+  ),
+  TypedStatefulShellBranch(
+    routes: [
+      TypedGoRoute<ScheduleScreenRoute>(path: '/schedule'),
+    ],
+  ),
+  TypedStatefulShellBranch(
+    routes: [
+      TypedGoRoute<JobsScreenRoute>(path: '/jobs', routes: [
+        TypedGoRoute<JobScreenRoute>(path: 'job', name: 'job'),
+      ]),
+    ],
+  ),
+  TypedStatefulShellBranch(
+    routes: [
+      TypedGoRoute<SettingsScreenRoute>(path: '/settings'),
+    ],
+  ),
+])
+class AppShellRouteData extends StatefulShellRouteData {
+  @override
+  Widget builder(BuildContext context, GoRouterState state,
+      StatefulNavigationShell navigationShell) {
+    return ScaffoldWithNestedNavigation(navigationShell: navigationShell);
+  }
+}
 
-@TypedGoRoute<HomeScreenRoute>(path: '/')
 @immutable
 class HomeScreenRoute extends GoRouteData {
   @override
@@ -18,7 +49,6 @@ class HomeScreenRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<ScheduleScreenRoute>(path: '/schedule')
 @immutable
 class ScheduleScreenRoute extends GoRouteData {
   @override
@@ -27,7 +57,6 @@ class ScheduleScreenRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<JobsScreenRoute>(path: '/jobs')
 @immutable
 class JobsScreenRoute extends GoRouteData {
   @override
@@ -36,7 +65,14 @@ class JobsScreenRoute extends GoRouteData {
   }
 }
 
-@TypedGoRoute<SettingsScreenRoute>(path: '/settings')
+@immutable
+class JobScreenRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const JobScreen();
+  }
+}
+
 @immutable
 class SettingsScreenRoute extends GoRouteData {
   @override
