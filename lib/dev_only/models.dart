@@ -9,32 +9,35 @@ enum ScoreType {
 /// Represents a job application.
 class JobApplication {
   final int id;
-  final String title;
+  final String post;
   final String description;
   final DateTime applicationDate;
   final String appliedOn;
   final String? link;
   final UnmodifiableListView<JobApplicationStage> stages;
+  final Organisation organisation;
 
   JobApplication({
     required this.id,
-    required this.title,
+    required this.post,
     required this.description,
     required this.applicationDate,
     required this.appliedOn,
     this.link,
     List<JobApplicationStage> stages = const [],
+    required this.organisation,
   }) : stages = UnmodifiableListView(stages);
 
   /// Adds a new stage to the job application.
   JobApplication addStage(JobApplicationStage stage) {
     return JobApplication(
       id: id,
-      title: title,
+      post: post,
       description: description,
       applicationDate: applicationDate,
       appliedOn: appliedOn,
       link: link,
+      organisation: organisation,
       stages: [...stages, stage],
     );
   }
@@ -43,11 +46,12 @@ class JobApplication {
   JobApplication removeStage(int stageId) {
     return JobApplication(
       id: id,
-      title: title,
+      post: post,
       description: description,
       applicationDate: applicationDate,
       appliedOn: appliedOn,
       link: link,
+      organisation: organisation,
       stages: stages.where((stage) => stage.id != stageId).toList(),
     );
   }
@@ -56,11 +60,12 @@ class JobApplication {
   JobApplication updateStage(JobApplicationStage updatedStage) {
     return JobApplication(
       id: id,
-      title: title,
+      post: post,
       description: description,
       applicationDate: applicationDate,
       appliedOn: appliedOn,
       link: link,
+      organisation: organisation,
       stages: stages
           .map((stage) => stage.id == updatedStage.id ? updatedStage : stage)
           .toList(),
@@ -73,7 +78,7 @@ class JobApplication {
       other is JobApplication &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          title == other.title &&
+          post == other.post &&
           description == other.description &&
           applicationDate == other.applicationDate &&
           appliedOn == other.appliedOn &&
@@ -83,12 +88,22 @@ class JobApplication {
   @override
   int get hashCode =>
       id.hashCode ^
-      title.hashCode ^
+      post.hashCode ^
       description.hashCode ^
       applicationDate.hashCode ^
       appliedOn.hashCode ^
       link.hashCode ^
       stages.hashCode;
+}
+
+class Organisation {
+  final int id;
+  final String name;
+
+  Organisation({
+    required this.id,
+    required this.name,
+  });
 }
 
 /// Represents a stage in the job application process.

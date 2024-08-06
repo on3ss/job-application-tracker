@@ -34,17 +34,23 @@ JobApplicationStage generateStage(int jobApplicationID) {
   );
 }
 
+Organisation generateOrganisation() {
+  return Organisation(
+      id: faker.randomGenerator.integer(5, min: 1), name: faker.company.name());
+}
+
 // Generate dummy JobApplication
 JobApplication generateApplication() {
   var faker = Faker();
   var id = faker.randomGenerator.integer(1000, min: 1);
   return JobApplication(
     id: id,
-    title: faker.job.title(),
+    post: faker.job.title(),
     description: faker.lorem.sentence(),
     applicationDate: faker.date.dateTime(),
     appliedOn: faker.company.name(),
     link: faker.internet.httpsUrl(),
+    organisation: generateOrganisation(),
     stages: List.generate(
       faker.randomGenerator.integer(5, min: 1),
       (_) => generateStage(id),
