@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({
@@ -33,10 +33,10 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
         child: BottomNavigationBar(
           elevation: 1,
           enableFeedback: true,
-          type: BottomNavigationBarType.fixed,
+          type: BottomNavigationBarType.shifting,
           currentIndex: navigationShell.currentIndex,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
           backgroundColor: Theme.of(context).colorScheme.surface,
           unselectedItemColor:
               Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
@@ -45,34 +45,34 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
             BottomNavigationBarItem(
               icon: _buildIcon(
                 context,
-                HeroIcons.squares_2x2,
+                HugeIcons.strokeRoundedDashboardSpeed01,
                 navigationShell.currentIndex == 0,
               ),
-              label: '',
+              label: 'Dashboard',
             ),
             BottomNavigationBarItem(
               icon: _buildIcon(
                 context,
-                HeroIcons.calendar,
+                HugeIcons.strokeRoundedCalendar03,
                 navigationShell.currentIndex == 1,
               ),
-              label: '',
+              label: 'Schedule',
             ),
             BottomNavigationBarItem(
               icon: _buildIcon(
                 context,
-                HeroIcons.briefcase,
+                HugeIcons.strokeRoundedNewJob,
                 navigationShell.currentIndex == 2,
               ),
-              label: '',
+              label: 'Jobs',
             ),
             BottomNavigationBarItem(
               icon: _buildIcon(
                 context,
-                HeroIcons.adjustments_horizontal,
+                HugeIcons.strokeRoundedSettings02,
                 navigationShell.currentIndex == 3,
               ),
-              label: '',
+              label: 'Settings',
             ),
           ],
           onTap: _goBranch,
