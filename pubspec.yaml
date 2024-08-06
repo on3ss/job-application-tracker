@@ -39,6 +39,7 @@ dependencies:
   adaptive_theme: ^3.6.0
   google_fonts: ^6.2.1
   hugeicons: ^0.0.7
+  faker: ^2.1.0
 
 dev_dependencies:
   flutter_test:
