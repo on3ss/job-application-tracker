@@ -9,16 +9,43 @@ class JobsScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final jobs = useMemoized(() => generateApplications(20));
+    final applications = useMemoized(() => generateApplications(20));
     return Scaffold(
       appBar: const CustomAppBar(title: "Jobs"),
       body: ListView.builder(
-        itemCount: jobs.length,
+        itemCount: applications.length,
         itemBuilder: (context, index) {
-          JobApplication job = jobs[index];
-          return ListTile(
-            title: Text(job.post),
-          );
+          JobApplication application = applications[index];
+          return JobApplicationListItem(application: application);
+        },
+      ),
+    );
+  }
+}
+
+class JobApplicationListItem extends StatelessWidget {
+  final JobApplication application;
+
+  const JobApplicationListItem({super.key, required this.application});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(8.0),
+      child: ListTile(
+        title: Text(application.post),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Organisation: ${application.organisation.name}'),
+            Text('Applied via: ${application.appliedVia}'),
+            // Text('Date: ${application.applicationDate.toLocal().toString().split(' ')[0]}'),
+            if (application.link != null)
+              Text('Link: ${application.link}', style: const TextStyle(color: Colors.blue)),
+          ],
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {
         },
       ),
     );

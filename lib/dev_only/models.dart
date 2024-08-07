@@ -12,7 +12,7 @@ class JobApplication {
   final String post;
   final String description;
   final DateTime applicationDate;
-  final String appliedOn;
+  final String appliedVia;
   final String? link;
   final UnmodifiableListView<JobApplicationStage> stages;
   final Organisation organisation;
@@ -22,7 +22,7 @@ class JobApplication {
     required this.post,
     required this.description,
     required this.applicationDate,
-    required this.appliedOn,
+    required this.appliedVia,
     this.link,
     List<JobApplicationStage> stages = const [],
     required this.organisation,
@@ -35,7 +35,7 @@ class JobApplication {
       post: post,
       description: description,
       applicationDate: applicationDate,
-      appliedOn: appliedOn,
+      appliedVia: appliedVia,
       link: link,
       organisation: organisation,
       stages: [...stages, stage],
@@ -49,7 +49,7 @@ class JobApplication {
       post: post,
       description: description,
       applicationDate: applicationDate,
-      appliedOn: appliedOn,
+      appliedVia: appliedVia,
       link: link,
       organisation: organisation,
       stages: stages.where((stage) => stage.id != stageId).toList(),
@@ -63,7 +63,7 @@ class JobApplication {
       post: post,
       description: description,
       applicationDate: applicationDate,
-      appliedOn: appliedOn,
+      appliedVia: appliedVia,
       link: link,
       organisation: organisation,
       stages: stages
@@ -81,7 +81,7 @@ class JobApplication {
           post == other.post &&
           description == other.description &&
           applicationDate == other.applicationDate &&
-          appliedOn == other.appliedOn &&
+          appliedVia == other.appliedVia &&
           link == other.link &&
           stages == other.stages;
 
@@ -91,7 +91,7 @@ class JobApplication {
       post.hashCode ^
       description.hashCode ^
       applicationDate.hashCode ^
-      appliedOn.hashCode ^
+      appliedVia.hashCode ^
       link.hashCode ^
       stages.hashCode;
 }

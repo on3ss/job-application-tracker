@@ -48,7 +48,7 @@ JobApplication generateApplication() {
     post: faker.job.title(),
     description: faker.lorem.sentence(),
     applicationDate: faker.date.dateTime(),
-    appliedOn: faker.company.name(),
+    appliedVia: faker.company.name(),
     link: faker.internet.httpsUrl(),
     organisation: generateOrganisation(),
     stages: List.generate(
