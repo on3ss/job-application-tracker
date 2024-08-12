@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:job_tracker/widgets/custom_icon.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -13,6 +14,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return FHeader(
       title: Text(title),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: CustomIcon(asset: FAssets.icons.sun),
+        )
+      ],
     );
   }
 

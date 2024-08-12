@@ -4,6 +4,7 @@ import 'package:forui/forui.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
 import 'package:job_tracker/dev_only/models.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
+import 'package:job_tracker/widgets/custom_icon.dart';
 
 class JobsScreen extends HookWidget {
   const JobsScreen({super.key});
@@ -43,14 +44,34 @@ class JobApplicationListItem extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Organisation: ${application.organisation.name}'),
-            Text('Applied via: ${application.appliedVia}'),
-            if (application.link != null)
-              Text(
-                'Link: ${application.link}',
-                style: const TextStyle(color: Colors.blue),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CustomIcon(
+                  asset: FAssets.icons.landmark,
+                  width: 18,
+                  height: 18,
+                ),
+                const SizedBox(width: 8.0),
+                Text(application.organisation.name),
+              ],
+            ),
+            const SizedBox(height: 4.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomIcon(
+                  asset: FAssets.icons.link2,
+                  width: 18,
+                  height: 18,
+                ),
+                const SizedBox(width: 8.0),
+                Text(application.appliedVia),
+              ],
+            ),
           ],
         ),
       ),
