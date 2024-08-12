@@ -27,11 +27,11 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
         onChange: (index) => _goBranch(index),
         items: [
           FBottomNavigationBarItem(
-            icon: FAssets.icons.layoutDashboard,
+            icon: FAssets.icons.circleGauge,
             label: 'Dashboard',
           ),
           FBottomNavigationBarItem(
-            icon: FAssets.icons.calendar,
+            icon: FAssets.icons.calendarRange,
             label: 'Schedule',
           ),
           FBottomNavigationBarItem(
@@ -39,7 +39,7 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
             label: 'Applications',
           ),
           FBottomNavigationBarItem(
-            icon: FAssets.icons.settings,
+            icon: FAssets.icons.bolt,
             label: 'Settings',
           ),
         ],
