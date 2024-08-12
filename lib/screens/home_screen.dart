@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,9 +7,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(title: "Home"),
-      body: Placeholder(),
+    return const FScaffold(
+      contentPad: false,
+      header: CustomAppBar(title: "Home"),
+      content: Placeholder(),
     );
   }
 }

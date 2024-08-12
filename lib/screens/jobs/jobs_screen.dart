@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:forui/forui.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
 import 'package:job_tracker/dev_only/models.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
@@ -10,9 +11,10 @@ class JobsScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final applications = useMemoized(() => generateApplications(20));
-    return Scaffold(
-      appBar: const CustomAppBar(title: "Jobs"),
-      body: ListView.builder(
+    return FScaffold(
+      contentPad: false,
+      header: const CustomAppBar(title: "Jobs"),
+      content: ListView.builder(
         itemCount: applications.length,
         itemBuilder: (context, index) {
           JobApplication application = applications[index];
@@ -30,23 +32,27 @@ class JobApplicationListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      child: ListTile(
+    return Container(
+      margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+      child: FCard(
         title: Text(application.post),
-        subtitle: Column(
+        subtitle: Text(
+          application.description,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Organisation: ${application.organisation.name}'),
             Text('Applied via: ${application.appliedVia}'),
-            // Text('Date: ${application.applicationDate.toLocal().toString().split(' ')[0]}'),
             if (application.link != null)
-              Text('Link: ${application.link}', style: const TextStyle(color: Colors.blue)),
+              Text(
+                'Link: ${application.link}',
+                style: const TextStyle(color: Colors.blue),
+              ),
           ],
         ),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () {
-        },
       ),
     );
   }

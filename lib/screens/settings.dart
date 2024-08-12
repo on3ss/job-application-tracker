@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forui/forui.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -6,9 +7,10 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(title: "Settings"),
-      body: Placeholder(),
+    return const FScaffold(
+      contentPad: false,
+      header: CustomAppBar(title: "Settings"),
+      content: Placeholder(),
     );
   }
 }
