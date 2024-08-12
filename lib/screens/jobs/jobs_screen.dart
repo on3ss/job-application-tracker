@@ -34,7 +34,7 @@ class JobApplicationListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: FCard(
         title: Text(application.post),
         subtitle: Text(
