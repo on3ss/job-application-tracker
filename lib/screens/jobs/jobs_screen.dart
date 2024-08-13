@@ -22,22 +22,24 @@ class JobsScreen extends HookWidget {
         },
         child: const Icon(HugeIcons.strokeRoundedPlusSign),
       ),
-      body: isLoading.value
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.separated(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.15,
+      body: SafeArea(
+        child: isLoading.value
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.separated(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.15,
+                ),
+                itemCount: applications.length,
+                itemBuilder: (context, index) {
+                  final application = applications[index];
+                  return JobApplicationListItem(
+                    key: ValueKey(application.id),
+                    application: application,
+                  );
+                },
+                separatorBuilder: (context, index) => const Divider(),
               ),
-              itemCount: applications.length,
-              itemBuilder: (context, index) {
-                final application = applications[index];
-                return JobApplicationListItem(
-                  key: ValueKey(application.id),
-                  application: application,
-                );
-              },
-              separatorBuilder: (context, index) => const Divider(),
-            ),
+      ),
     );
   }
 }
@@ -73,40 +75,21 @@ class JobApplicationListItem extends StatelessWidget {
         const SizedBox(height: 8.0),
         Row(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2.0,
-                horizontal: 4.0,
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(2.0),
-              ),
-              child: Text(
-                "${application.isDoneStages} Done",
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-              ),
+            Badge(
+              label: Text("${application.isDoneStages} Done"),
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              textStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
             ),
             const VerticalDivider(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2.0,
-                horizontal: 4.0,
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(2.0),
-              ),
-              child: Text(
-                "${application.isNotDoneStages} Left",
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onSecondary,
-                    ),
-              ),
+            Badge(
+              label: Text("${application.isNotDoneStages} Left"),
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
           ],
         ),
