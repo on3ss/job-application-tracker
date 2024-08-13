@@ -50,20 +50,19 @@ class JobApplicationListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: _buildTitle(context),
-      subtitle: _buildSubtitle(),
+      title: Text(
+        application.post,
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+      subtitle: _buildSubtitle(context),
       onTap: () => context.goNamed('job'),
     );
   }
 
-  Widget _buildTitle(BuildContext context) {
+  Widget _buildSubtitle(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          application.post,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
         const SizedBox(height: 4.0),
         Text(
           application.description,
@@ -71,14 +70,46 @@ class JobApplicationListItem extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-      ],
-    );
-  }
-
-  Widget _buildSubtitle() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+        const SizedBox(height: 8.0),
+        Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 2.0,
+                horizontal: 4.0,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(2.0),
+              ),
+              child: Text(
+                "${application.isDoneStages} Done",
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+              ),
+            ),
+            const VerticalDivider(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 2.0,
+                horizontal: 4.0,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondary,
+                borderRadius: BorderRadius.circular(2.0),
+              ),
+              child: Text(
+                "${application.isNotDoneStages} Left",
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 8.0),
         IconWithText(
           icon: HugeIcons.strokeRoundedBuilding04,
@@ -115,7 +146,7 @@ class IconWithText extends StatelessWidget {
           size: 16,
           color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
         ),
-        const SizedBox(width: 4.0),
+        const VerticalDivider(width: 8),
         Text(text),
       ],
     );

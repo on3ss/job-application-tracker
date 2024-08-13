@@ -72,6 +72,9 @@ class JobApplication {
     );
   }
 
+  int get isDoneStages => stages.where((stage) => stage.isDone).length;
+  int get isNotDoneStages => stages.where((stage) => !stage.isDone).length;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
