@@ -18,9 +18,7 @@ class JobsScreen extends HookWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: "Jobs"),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Handle add job application action
-        },
+        onPressed: () => context.goNamed('job-create'),
         child: const Icon(HugeIcons.strokeRoundedPlusSign),
       ),
       body: SafeArea(

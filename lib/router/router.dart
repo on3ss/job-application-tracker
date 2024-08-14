@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:job_tracker/screens/home_screen.dart';
+import 'package:job_tracker/screens/jobs/job_create.dart';
 import 'package:job_tracker/screens/jobs/job_screen.dart';
 import 'package:job_tracker/screens/jobs/jobs_screen.dart';
 import 'package:job_tracker/screens/schedule_screen.dart';
@@ -24,6 +25,7 @@ part "router.g.dart";
     routes: [
       TypedGoRoute<JobsScreenRoute>(path: '/jobs', routes: [
         TypedGoRoute<JobScreenRoute>(path: 'job', name: 'job'),
+        TypedGoRoute<JobCreateRoute>(path: 'create', name: 'job-create'),
       ]),
     ],
   ),
@@ -70,6 +72,14 @@ class JobScreenRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return const JobScreen();
+  }
+}
+
+@immutable
+class JobCreateRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return JobCreateScreen();
   }
 }
 
