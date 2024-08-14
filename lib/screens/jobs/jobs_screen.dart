@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:intl/intl.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
 import 'package:job_tracker/dev_only/models.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
@@ -102,6 +103,11 @@ class JobApplicationListItem extends StatelessWidget {
         IconWithText(
           icon: HugeIcons.strokeRoundedLink04,
           text: application.appliedVia,
+        ),
+        const SizedBox(height: 4.0),
+        IconWithText(
+          icon: HugeIcons.strokeRoundedCalendarAdd01,
+          text: DateFormat('d MMMM yyyy').format(application.applicationDate),
         ),
       ],
     );
