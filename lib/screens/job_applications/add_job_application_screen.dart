@@ -102,58 +102,6 @@ class ApplicationDateField extends StatelessWidget {
   }
 }
 
-class OrganisationField extends StatelessWidget {
-  final List<String> organisations;
-
-  const OrganisationField({super.key, required this.organisations});
-
-  @override
-  Widget build(BuildContext context) {
-    return FormBuilderField<String>(
-      name: 'organisation',
-      builder: (FormFieldState<String> field) {
-        return Container(
-          margin: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 0),
-          child: Autocomplete<String>(
-            optionsBuilder: (TextEditingValue textEditingValue) {
-              if (textEditingValue.text.isEmpty) {
-                return const Iterable<String>.empty();
-              }
-              return organisations.where((String option) {
-                return option
-                    .toLowerCase()
-                    .contains(textEditingValue.text.toLowerCase());
-              });
-            },
-            onSelected: (option) => field.didChange(option),
-            fieldViewBuilder: (
-              context,
-              controller,
-              focusNode,
-              onFieldSubmitted,
-            ) {
-              return TextField(
-                controller: controller,
-                focusNode: focusNode,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: 'Organisation',
-                  hintText: 'Organisation',
-                  helperText: 'The organisation you\'re applying into',
-                  alignLabelWithHint: true,
-                  errorText: field.errorText,
-                ),
-                onSubmitted: (value) => onFieldSubmitted(),
-              );
-            },
-          ),
-        );
-      },
-      validator: FormBuilderValidators.required(),
-    );
-  }
-}
-
 class SaveButton extends StatelessWidget {
   final GlobalKey<FormBuilderState> formKey;
 
