@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
+import 'package:job_tracker/screens/job_applications/widgets/organisation_dropdown.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
 import 'package:job_tracker/widgets/custom_date_field.dart';
 import 'package:job_tracker/widgets/custom_text_field.dart';
@@ -28,7 +29,10 @@ class AddJobApplicationScreen extends HookWidget {
               const PostField(),
               const DescriptionField(),
               const ApplicationDateField(),
-              OrganisationField(organisations: organisations),
+              OrganisationSelectOrCreate(
+                name: 'organisation',
+                items: organisations,
+              ),
               const SizedBox(height: 32),
               SaveButton(formKey: _formKey),
             ],
