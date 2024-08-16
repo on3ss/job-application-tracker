@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:job_tracker/screens/home_screen.dart';
-import 'package:job_tracker/screens/jobs/job_create.dart';
-import 'package:job_tracker/screens/jobs/job_screen.dart';
-import 'package:job_tracker/screens/jobs/jobs_screen.dart';
+import 'package:job_tracker/screens/job_applications/add_job_application_screen.dart';
+import 'package:job_tracker/screens/job_applications/job_application_screen.dart';
+import 'package:job_tracker/screens/job_applications/job_applications_screen.dart';
 import 'package:job_tracker/screens/schedule_screen.dart';
 import 'package:job_tracker/screens/settings.dart';
 import 'package:job_tracker/widgets/scaffold_with_nested_navigation.dart';
@@ -63,7 +63,7 @@ class ScheduleScreenRoute extends GoRouteData {
 class JobsScreenRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const JobsScreen();
+    return const JobApplicationsScreen();
   }
 }
 
@@ -71,7 +71,7 @@ class JobsScreenRoute extends GoRouteData {
 class JobScreenRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const JobScreen();
+    return const JobApplicationScreen();
   }
 }
 
@@ -79,7 +79,7 @@ class JobScreenRoute extends GoRouteData {
 class JobCreateRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return JobCreateScreen();
+    return AddJobApplicationScreen();
   }
 }
 

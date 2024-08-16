@@ -5,8 +5,8 @@ import 'package:job_tracker/widgets/custom_appbar.dart';
 import 'package:job_tracker/widgets/custom_date_field.dart';
 import 'package:job_tracker/widgets/custom_text_field.dart';
 
-class JobCreateScreen extends StatelessWidget {
-  JobCreateScreen({super.key});
+class AddJobApplicationScreen extends StatelessWidget {
+  AddJobApplicationScreen({super.key});
 
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -49,7 +49,9 @@ class JobCreateScreen extends StatelessWidget {
                 hint: 'Application Date',
                 helper: 'Date on which you\'ve applied for this post',
                 inputType: InputType.date,
-              )
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(onPressed: () {}, child: const Text('Save'))
             ],
           ),
         ),

@@ -7,8 +7,8 @@ import 'package:job_tracker/dev_only/dummy_data.dart';
 import 'package:job_tracker/dev_only/models.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
 
-class JobsScreen extends HookWidget {
-  const JobsScreen({super.key});
+class JobApplicationsScreen extends HookWidget {
+  const JobApplicationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
