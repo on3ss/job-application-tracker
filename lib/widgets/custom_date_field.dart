@@ -11,6 +11,8 @@ class CustomDateTimeField extends StatelessWidget {
   final int maxLines;
   final TextInputAction textInputAction;
   final InputType inputType;
+  final String? Function(DateTime?)? validator;
+  final DateTime? lastDate;
 
   const CustomDateTimeField({
     super.key,
@@ -23,6 +25,8 @@ class CustomDateTimeField extends StatelessWidget {
     this.maxLines = 1,
     this.textInputAction = TextInputAction.done,
     this.inputType = InputType.both,
+    this.validator,
+    this.lastDate,
   });
 
   @override
@@ -43,6 +47,8 @@ class CustomDateTimeField extends StatelessWidget {
         maxLines: maxLines,
         inputType: inputType,
         textInputAction: textInputAction,
+        validator: validator,
+        lastDate: lastDate,
       ),
     );
   }
