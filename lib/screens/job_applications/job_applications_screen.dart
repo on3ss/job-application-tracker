@@ -99,11 +99,6 @@ class JobApplicationListItem extends StatelessWidget {
         ),
         const SizedBox(height: 4.0),
         IconWithText(
-          icon: HugeIcons.strokeRoundedLink04,
-          text: application.appliedVia,
-        ),
-        const SizedBox(height: 4.0),
-        IconWithText(
           icon: HugeIcons.strokeRoundedCalendarAdd01,
           text: DateFormat('d MMMM yyyy').format(application.applicationDate),
         ),

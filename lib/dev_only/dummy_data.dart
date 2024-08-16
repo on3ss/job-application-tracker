@@ -48,8 +48,6 @@ JobApplication generateApplication() {
     post: faker.job.title(),
     description: faker.lorem.sentence(),
     applicationDate: faker.date.dateTime(),
-    appliedVia: faker.company.name(),
-    link: faker.internet.httpsUrl(),
     organisation: generateOrganisation(),
     stages: List.generate(
       faker.randomGenerator.integer(5, min: 1),
