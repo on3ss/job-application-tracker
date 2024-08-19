@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:job_tracker/widgets/custom_text_field.dart'; // Ensure CustomTextField is adapted or replaced
 
 class OrganisationSelectOrCreate extends StatefulWidget {
   final String name;
@@ -23,6 +24,7 @@ class OrganisationSelectOrCreate extends StatefulWidget {
 class OrganisationSelectOrCreateState
     extends State<OrganisationSelectOrCreate> {
   late List<String> items;
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
@@ -32,59 +34,78 @@ class OrganisationSelectOrCreateState
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilderDropdown<String>(
-      name: widget.name,
-      initialValue: widget.initialValue,
-      validator: widget.validator,
-      decoration: const InputDecoration(
-        labelText: 'Organisation',
-        border: OutlineInputBorder(),
+    return Container(
+      margin: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 0),
+      child: FormBuilderDropdown<String>(
+        name: widget.name,
+        initialValue: widget.initialValue,
+        validator: widget.validator,
+        decoration: const InputDecoration(
+          labelText: 'Organisation',
+          hintText: 'Organisation',
+          helperText: 'The organisation you\'re applying into',
+          border: OutlineInputBorder(),
+        ),
+        items: items
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(item),
+                ))
+            .toList()
+          ..add(const DropdownMenuItem<String>(
+            value: 'new',
+            child: Text('Add New...'),
+          )),
+        onChanged: (value) {
+          if (value == 'new') {
+            _showCreateNewBottomSheet(context);
+          }
+        },
       ),
-      items: items
-          .map((item) => DropdownMenuItem<String>(
-                value: item,
-                child: Text(item),
-              ))
-          .toList()
-        ..add(const DropdownMenuItem<String>(
-          value: 'new',
-          child: Text('Add New...'),
-        )),
-      onChanged: (value) {
-        if (value == 'new') {
-          _showCreateNewDialog(context);
-        }
-      },
     );
   }
 
-  void _showCreateNewDialog(BuildContext context) async {
-    final TextEditingController controller = TextEditingController();
-
-    String? newValue = await showDialog<String>(
+  void _showCreateNewBottomSheet(BuildContext context) async {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final newValue = await showModalBottomSheet<String>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add New Organisation'),
-          content: TextField(
-            controller: controller,
-            decoration:
-                const InputDecoration(hintText: 'Enter new organisation'),
+        return Container(
+          height: screenHeight * 0.5,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Text(
+                'New Organisation',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const CustomTextField(
+                name: 'organisation',
+                label: 'Organisation',
+                hint: 'Organisation',
+                helper: 'Enter organisation name',
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(null);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(_textController.text);
+                    },
+                    child: const Text('Create'),
+                  ),
+                ],
+              ),
+            ],
           ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(null);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(controller.text);
-              },
-              child: const Text('Create'),
-            ),
-          ],
         );
       },
     );
