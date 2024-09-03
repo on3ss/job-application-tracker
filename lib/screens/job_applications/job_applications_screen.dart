@@ -73,7 +73,9 @@ class JobApplicationListItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 8.0),
-        Row(
+        Wrap(
+          direction: Axis.horizontal,
+          spacing: 8.0,
           children: [
             Badge(
               label: Text("${application.isDoneStages} Done"),
@@ -83,7 +85,6 @@ class JobApplicationListItem extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
             ),
-            const VerticalDivider(width: 8),
             Badge(
               label: Text("${application.isNotDoneStages} Left"),
               textStyle: Theme.of(context)
@@ -93,7 +94,6 @@ class JobApplicationListItem extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8.0),
         IconWithText(
           icon: HugeIcons.strokeRoundedBuilding04,
           text: application.organisation.name,

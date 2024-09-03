@@ -91,7 +91,7 @@ class ApplicationStageList extends HookWidget {
             const SizedBox(height: 8.0),
             Wrap(
               direction: Axis.horizontal,
-              spacing: 4.0,
+              spacing: 8.0,
               children: stages[index]
                   .subjects
                   .map(
