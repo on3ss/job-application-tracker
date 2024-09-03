@@ -5,6 +5,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
 import 'package:job_tracker/dev_only/models.dart';
+import 'package:job_tracker/screens/job_applications/widgets/icon_with_text.dart';
 import 'package:job_tracker/widgets/custom_appbar.dart';
 
 class JobApplicationsScreen extends HookWidget {
@@ -102,34 +103,6 @@ class JobApplicationListItem extends StatelessWidget {
           icon: HugeIcons.strokeRoundedCalendarAdd01,
           text: DateFormat('d MMMM yyyy').format(application.applicationDate),
         ),
-      ],
-    );
-  }
-}
-
-class IconWithText extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const IconWithText({
-    super.key,
-    required this.icon,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 16,
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-        ),
-        const VerticalDivider(width: 8),
-        Text(text),
       ],
     );
   }
