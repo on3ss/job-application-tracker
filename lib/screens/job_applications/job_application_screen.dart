@@ -40,10 +40,34 @@ class JobApplicationScreen extends HookWidget {
             ),
             TabBar(
               controller: tabController,
-              tabs: const [
-                Tab(child: Text("All")),
-                Tab(child: Text("Pending")),
-                Tab(child: Text("Done")),
+              tabs: [
+                const Tab(child: Text("All")),
+                Tab(
+                  child: Row(
+                    children: [
+                      Icon(
+                        HugeIcons.strokeRoundedLoading01,
+                        color: Theme.of(context).colorScheme.tertiary,
+                        size: 16.0,
+                      ),
+                      const SizedBox(width: 4.0),
+                      const Text("Pending"),
+                    ],
+                  ),
+                ),
+                Tab(
+                  child: Row(
+                    children: [
+                      Icon(
+                        HugeIcons.strokeRoundedCheckmarkCircle02,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 16.0,
+                      ),
+                      const SizedBox(width: 4.0),
+                      const Text("Done"),
+                    ],
+                  ),
+                ),
               ],
             ),
             Expanded(
@@ -106,8 +130,17 @@ class ApplicationStageList extends HookWidget {
                     ),
                   )
                   .toList(),
-            )
+            ),
           ],
+        ),
+        trailing: Icon(
+          stages[index].isDone
+              ? HugeIcons.strokeRoundedCheckmarkCircle02
+              : HugeIcons.strokeRoundedLoading01,
+          color: stages[index].isDone
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.tertiary,
+          size: 20.0,
         ),
       ),
       separatorBuilder: (_, __) => const Divider(),
