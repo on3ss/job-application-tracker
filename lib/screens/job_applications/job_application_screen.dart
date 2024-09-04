@@ -174,7 +174,7 @@ class ApplicationStageList extends HookWidget {
         useMemoized(() => List.generate(10, (index) => generateStage(1)));
     return ListView.separated(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height * 0.05,
+        bottom: MediaQuery.of(context).size.height * 0.15,
       ),
       itemBuilder: (context, index) =>
           ApplicationStageListItem(stage: stages[index]),
