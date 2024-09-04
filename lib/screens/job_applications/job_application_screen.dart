@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
@@ -14,6 +15,33 @@ class JobApplicationScreen extends HookWidget {
     final tabController = useTabController(initialLength: 3);
     return Scaffold(
       appBar: const CustomAppBar(title: "Job Post Name"),
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: ExpandableFab(
+        overlayStyle: const ExpandableFabOverlayStyle(blur: 2),
+        openButtonBuilder: RotateFloatingActionButtonBuilder(
+          child: const Icon(HugeIcons.strokeRoundedRocket01),
+          fabSize: ExpandableFabSize.regular,
+        ),
+        children: [
+          FloatingActionButton.small(
+            heroTag: null,
+            child: const Icon(HugeIcons.strokeRoundedAdd02),
+            onPressed: () {},
+          ),
+          FloatingActionButton.small(
+            heroTag: null,
+            child: const Icon(HugeIcons.strokeRoundedPencilEdit02),
+            onPressed: () {},
+          ),
+          FloatingActionButton.small(
+            backgroundColor: Theme.of(context).colorScheme.error,
+            foregroundColor: Theme.of(context).colorScheme.onError,
+            heroTag: null,
+            child: const Icon(HugeIcons.strokeRoundedDelete02),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
