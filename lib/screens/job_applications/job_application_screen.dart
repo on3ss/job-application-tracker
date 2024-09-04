@@ -16,32 +16,7 @@ class JobApplicationScreen extends HookWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: "Job Post Name"),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: ExpandableFab(
-        overlayStyle: const ExpandableFabOverlayStyle(blur: 2),
-        openButtonBuilder: RotateFloatingActionButtonBuilder(
-          child: const Icon(HugeIcons.strokeRoundedRocket01),
-          fabSize: ExpandableFabSize.regular,
-        ),
-        children: [
-          FloatingActionButton.small(
-            heroTag: null,
-            child: const Icon(HugeIcons.strokeRoundedAdd02),
-            onPressed: () {},
-          ),
-          FloatingActionButton.small(
-            heroTag: null,
-            child: const Icon(HugeIcons.strokeRoundedPencilEdit02),
-            onPressed: () {},
-          ),
-          FloatingActionButton.small(
-            backgroundColor: Theme.of(context).colorScheme.error,
-            foregroundColor: Theme.of(context).colorScheme.onError,
-            heroTag: null,
-            child: const Icon(HugeIcons.strokeRoundedDelete02),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      floatingActionButton: const JobApplicationFab(),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +86,42 @@ class JobApplicationScreen extends HookWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class JobApplicationFab extends StatelessWidget {
+  const JobApplicationFab({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpandableFab(
+      overlayStyle: const ExpandableFabOverlayStyle(blur: 2),
+      openButtonBuilder: RotateFloatingActionButtonBuilder(
+        child: const Icon(HugeIcons.strokeRoundedRocket01),
+        fabSize: ExpandableFabSize.regular,
+      ),
+      children: [
+        FloatingActionButton.small(
+          heroTag: null,
+          child: const Icon(HugeIcons.strokeRoundedAdd02),
+          onPressed: () {},
+        ),
+        FloatingActionButton.small(
+          heroTag: null,
+          child: const Icon(HugeIcons.strokeRoundedPencilEdit02),
+          onPressed: () {},
+        ),
+        FloatingActionButton.small(
+          backgroundColor: Theme.of(context).colorScheme.error,
+          foregroundColor: Theme.of(context).colorScheme.onError,
+          heroTag: null,
+          child: const Icon(HugeIcons.strokeRoundedDelete02),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }
