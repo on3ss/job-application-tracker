@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
 import 'package:job_tracker/dev_only/models.dart';
@@ -158,9 +159,40 @@ class JobApplicationFab extends StatelessWidget {
           foregroundColor: Theme.of(context).colorScheme.onError,
           heroTag: null,
           child: const Icon(HugeIcons.strokeRoundedDelete02),
-          onPressed: () {},
+          onPressed: () => _showMyDialog(context),
         ),
       ],
+    );
+  }
+
+  _showMyDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Application'),
+          content: const SingleChildScrollView(
+            child:
+                Text("Are you sure you want to delete this job application?"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                context.pop();
+                GoRouter.of(context).go("/jobs");
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
