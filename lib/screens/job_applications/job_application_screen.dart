@@ -205,7 +205,7 @@ class ApplicationStageListItem extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           IconWithText(
-            icon: HugeIcons.strokeRoundedBook02,
+            icon: HugeIcons.strokeRoundedBooks02,
             text: stage.subjects.join(', '),
           ),
           const SizedBox(height: 4.0),
