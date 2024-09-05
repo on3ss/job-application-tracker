@@ -18,38 +18,34 @@ class JobApplicationScreen extends HookWidget {
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: const JobApplicationFab(),
       body: SafeArea(
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return [
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const JobApplicationInfo(),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Stages",
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(HugeIcons.strokeRoundedFilter),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ];
-          },
-          body: const ApplicationStageList(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const JobApplicationInfo(),
+            const Divider(),
+            _buildStagesHeader(context),
+            const Expanded(child: ApplicationStageList()),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildStagesHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "STAGES",
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(HugeIcons.strokeRoundedFilter),
+          ),
+        ],
       ),
     );
   }
@@ -66,9 +62,7 @@ class JobApplicationInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-            'Nulla imperdiet diam purus, pulvinar aliquam dolor '
-            'malesuada sit amet.',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla imperdiet diam purus, pulvinar aliquam dolor malesuada sit amet.',
           ),
           SizedBox(height: 8.0),
           IconWithText(
@@ -97,36 +91,39 @@ class JobApplicationFab extends StatelessWidget {
         child: const Icon(HugeIcons.strokeRoundedRocket01),
         fabSize: ExpandableFabSize.regular,
       ),
-      children: [
-        FloatingActionButton.small(
-          heroTag: null,
-          child: const Icon(HugeIcons.strokeRoundedAdd02),
-          onPressed: () => _navigateToAddStage(context),
-        ),
-        FloatingActionButton.small(
-          heroTag: null,
-          child: const Icon(HugeIcons.strokeRoundedPencilEdit02),
-          onPressed: () => _navigateToEditApplication(context),
-        ),
-        FloatingActionButton.small(
-          backgroundColor: Theme.of(context).colorScheme.error,
-          foregroundColor: Theme.of(context).colorScheme.onError,
-          heroTag: null,
-          child: const Icon(HugeIcons.strokeRoundedDelete02),
-          onPressed: () => _showDeleteDialog(context),
-        ),
-      ],
+      children: _buildFabChildren(context),
     );
   }
 
-  void _navigateToAddStage(BuildContext context) {
-    // Navigate to the Add Stage screen
-    GoRouter.of(context).push('/add-stage');
+  List<Widget> _buildFabChildren(BuildContext context) {
+    return [
+      _buildFabButton(
+        icon: HugeIcons.strokeRoundedAdd02,
+        onPressed: () {},
+      ),
+      _buildFabButton(
+        icon: HugeIcons.strokeRoundedPencilEdit02,
+        onPressed: () {},
+      ),
+      FloatingActionButton.small(
+        backgroundColor: Theme.of(context).colorScheme.error,
+        foregroundColor: Theme.of(context).colorScheme.onError,
+        heroTag: null,
+        child: const Icon(HugeIcons.strokeRoundedDelete02),
+        onPressed: () => _showDeleteDialog(context),
+      ),
+    ];
   }
 
-  void _navigateToEditApplication(BuildContext context) {
-    // Navigate to the Edit Application screen
-    GoRouter.of(context).push('/edit-application');
+  FloatingActionButton _buildFabButton({
+    required IconData icon,
+    required VoidCallback onPressed,
+  }) {
+    return FloatingActionButton.small(
+      heroTag: null,
+      onPressed: onPressed,
+      child: Icon(icon),
+    );
   }
 
   void _showDeleteDialog(BuildContext context) {
@@ -136,11 +133,8 @@ class JobApplicationFab extends StatelessWidget {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Delete Application'),
-          content: const SingleChildScrollView(
-            child: Text(
-              "Are you sure you want to delete this job application?",
-            ),
-          ),
+          content: const Text(
+              "Are you sure you want to delete this job application?"),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),
@@ -167,9 +161,9 @@ class ApplicationStageList extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<JobApplicationStage> stages = useMemoized(
-      () => List.generate(20, (index) => generateStage(index + 1)),
-    );
+    final List<JobApplicationStage> stages =
+        useMemoized(() => List.generate(20, (index) => generateStage(1)));
+
     return ListView.separated(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.15,
@@ -183,7 +177,10 @@ class ApplicationStageList extends HookWidget {
 }
 
 class ApplicationStageListItem extends StatelessWidget {
-  const ApplicationStageListItem({super.key, required this.stage});
+  const ApplicationStageListItem({
+    super.key,
+    required this.stage,
+  });
 
   final JobApplicationStage stage;
 
@@ -204,22 +201,7 @@ class ApplicationStageListItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 8.0),
-          Wrap(
-            spacing: 8.0,
-            children: stage.subjects
-                .map(
-                  (subject) => Badge(
-                    label: Text(subject),
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    textStyle:
-                        Theme.of(context).textTheme.labelMedium!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                  ),
-                )
-                .toList(),
-          ),
+          _buildSubjects(context),
         ],
       ),
       trailing: Icon(
@@ -231,6 +213,22 @@ class ApplicationStageListItem extends StatelessWidget {
             : Theme.of(context).colorScheme.tertiary,
         size: 20.0,
       ),
+    );
+  }
+
+  Widget _buildSubjects(BuildContext context) {
+    return Wrap(
+      spacing: 8.0,
+      children: stage.subjects
+          .map((subject) => Badge(
+                label: Text(subject),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                textStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+              ))
+          .toList(),
     );
   }
 }
