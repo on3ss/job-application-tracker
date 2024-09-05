@@ -3,6 +3,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:intl/intl.dart';
 import 'package:job_tracker/dev_only/dummy_data.dart';
 import 'package:job_tracker/dev_only/models.dart';
 import 'package:job_tracker/screens/job_applications/widgets/icon_with_text.dart';
@@ -204,6 +205,16 @@ class ApplicationStageListItem extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           _buildSubjects(context),
+          const SizedBox(height: 8.0),
+          IconWithText(
+            icon: HugeIcons.strokeRoundedCalendar03,
+            text: DateFormat('hh:mm a').format(stage.on),
+          ),
+          const SizedBox(height: 4.0),
+          IconWithText(
+            icon: HugeIcons.strokeRoundedTime04,
+            text: DateFormat('MMMM d, y').format(stage.on),
+          ),
         ],
       ),
       trailing: Icon(
