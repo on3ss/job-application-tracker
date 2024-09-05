@@ -200,19 +200,22 @@ class ApplicationStageListItem extends StatelessWidget {
           Text(
             stage.description,
             style: bodyStyle,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 8.0),
-          _buildSubjects(context),
-          const SizedBox(height: 8.0),
           IconWithText(
-            icon: HugeIcons.strokeRoundedCalendar03,
-            text: DateFormat('hh:mm a').format(stage.on),
+            icon: HugeIcons.strokeRoundedBook02,
+            text: stage.subjects.join(', '),
           ),
           const SizedBox(height: 4.0),
           IconWithText(
             icon: HugeIcons.strokeRoundedTime04,
+            text: DateFormat('hh:mm a').format(stage.on),
+          ),
+          const SizedBox(height: 4.0),
+          IconWithText(
+            icon: HugeIcons.strokeRoundedCalendar03,
             text: DateFormat('MMMM d, y').format(stage.on),
           ),
         ],
@@ -224,26 +227,6 @@ class ApplicationStageListItem extends StatelessWidget {
         color: stage.isDone ? primaryColor : tertiaryColor,
         size: 20.0,
       ),
-    );
-  }
-
-  Widget _buildSubjects(BuildContext context) {
-    final Color primaryColor = Theme.of(context).colorScheme.primary;
-    final TextStyle labelStyle =
-        Theme.of(context).textTheme.labelMedium!.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.onPrimary,
-            );
-
-    return Wrap(
-      spacing: 8.0,
-      children: stage.subjects
-          .map((subject) => Badge(
-                label: Text(subject),
-                backgroundColor: primaryColor,
-                textStyle: labelStyle,
-              ))
-          .toList(),
     );
   }
 }
