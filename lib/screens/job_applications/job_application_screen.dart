@@ -22,7 +22,6 @@ class JobApplicationScreen extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const JobApplicationInfo(),
-            const Divider(),
             _buildStagesHeader(context),
             const Expanded(child: ApplicationStageList()),
           ],
@@ -57,7 +56,7 @@ class JobApplicationInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(16.0),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
