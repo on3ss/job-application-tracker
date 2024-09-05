@@ -94,6 +94,7 @@ class JobApplicationListItem extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 8.0),
         IconWithText(
           icon: HugeIcons.strokeRoundedBuilding04,
           text: application.organisation.name,
