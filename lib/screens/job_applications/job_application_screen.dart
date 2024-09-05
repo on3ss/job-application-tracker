@@ -138,14 +138,12 @@ class JobApplicationFab extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: const Text('Delete'),
               onPressed: () {
-                context.pop();
+                Navigator.of(context).pop();
                 GoRouter.of(context).go("/jobs");
               },
             ),
@@ -186,17 +184,22 @@ class ApplicationStageListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle bodyStyle = Theme.of(context).textTheme.bodySmall!;
+    final TextStyle titleStyle = Theme.of(context).textTheme.titleMedium!;
+    final Color primaryColor = Theme.of(context).colorScheme.primary;
+    final Color tertiaryColor = Theme.of(context).colorScheme.tertiary;
+
     return ListTile(
       title: Text(
         stage.name,
-        style: Theme.of(context).textTheme.titleMedium,
+        style: titleStyle,
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             stage.description,
-            style: Theme.of(context).textTheme.bodySmall,
+            style: bodyStyle,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -208,25 +211,27 @@ class ApplicationStageListItem extends StatelessWidget {
         stage.isDone
             ? HugeIcons.strokeRoundedCheckmarkCircle02
             : HugeIcons.strokeRoundedLoading01,
-        color: stage.isDone
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.tertiary,
+        color: stage.isDone ? primaryColor : tertiaryColor,
         size: 20.0,
       ),
     );
   }
 
   Widget _buildSubjects(BuildContext context) {
+    final Color primaryColor = Theme.of(context).colorScheme.primary;
+    final TextStyle labelStyle =
+        Theme.of(context).textTheme.labelMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.onPrimary,
+            );
+
     return Wrap(
       spacing: 8.0,
       children: stage.subjects
           .map((subject) => Badge(
                 label: Text(subject),
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                textStyle: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
+                backgroundColor: primaryColor,
+                textStyle: labelStyle,
               ))
           .toList(),
     );
