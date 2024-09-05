@@ -13,52 +13,50 @@ class JobApplicationScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabController = useTabController(initialLength: 3);
     return Scaffold(
       appBar: const CustomAppBar(title: "Job Post Name"),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: const JobApplicationFab(),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const JobApplicationInfo(),
-            ApplicationStageListTabs(tabController: tabController),
-            ApplicationStageListViews(tabController: tabController),
-          ],
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const JobApplicationInfo(),
+                    const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Stages",
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(HugeIcons.strokeRoundedFilter),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ];
+          },
+          body: const ApplicationStageList(),
         ),
       ),
     );
   }
 }
 
-class ApplicationStageListViews extends StatelessWidget {
-  const ApplicationStageListViews({
-    super.key,
-    required this.tabController,
-  });
-
-  final TabController tabController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: TabBarView(
-        controller: tabController,
-        children: const [
-          ApplicationStageList(),
-          ApplicationStageList(),
-          ApplicationStageList(),
-        ],
-      ),
-    );
-  }
-}
-
 class JobApplicationInfo extends StatelessWidget {
-  const JobApplicationInfo({
-    super.key,
-  });
+  const JobApplicationInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +66,10 @@ class JobApplicationInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla imperdiet diam purus, pulvinar aliquam dolor malesuada sit amet.'),
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+            'Nulla imperdiet diam purus, pulvinar aliquam dolor '
+            'malesuada sit amet.',
+          ),
           SizedBox(height: 8.0),
           IconWithText(
             icon: HugeIcons.strokeRoundedBuilding04,
@@ -85,55 +86,8 @@ class JobApplicationInfo extends StatelessWidget {
   }
 }
 
-class ApplicationStageListTabs extends StatelessWidget {
-  const ApplicationStageListTabs({
-    super.key,
-    required this.tabController,
-  });
-
-  final TabController tabController;
-
-  @override
-  Widget build(BuildContext context) {
-    return TabBar(
-      controller: tabController,
-      tabs: [
-        const Tab(child: Text("All")),
-        Tab(
-          child: Row(
-            children: [
-              Icon(
-                HugeIcons.strokeRoundedLoading01,
-                color: Theme.of(context).colorScheme.tertiary,
-                size: 16.0,
-              ),
-              const SizedBox(width: 4.0),
-              const Text("Pending"),
-            ],
-          ),
-        ),
-        Tab(
-          child: Row(
-            children: [
-              Icon(
-                HugeIcons.strokeRoundedCheckmarkCircle02,
-                color: Theme.of(context).colorScheme.primary,
-                size: 16.0,
-              ),
-              const SizedBox(width: 4.0),
-              const Text("Done"),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class JobApplicationFab extends StatelessWidget {
-  const JobApplicationFab({
-    super.key,
-  });
+  const JobApplicationFab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -147,34 +101,45 @@ class JobApplicationFab extends StatelessWidget {
         FloatingActionButton.small(
           heroTag: null,
           child: const Icon(HugeIcons.strokeRoundedAdd02),
-          onPressed: () {},
+          onPressed: () => _navigateToAddStage(context),
         ),
         FloatingActionButton.small(
           heroTag: null,
           child: const Icon(HugeIcons.strokeRoundedPencilEdit02),
-          onPressed: () {},
+          onPressed: () => _navigateToEditApplication(context),
         ),
         FloatingActionButton.small(
           backgroundColor: Theme.of(context).colorScheme.error,
           foregroundColor: Theme.of(context).colorScheme.onError,
           heroTag: null,
           child: const Icon(HugeIcons.strokeRoundedDelete02),
-          onPressed: () => _showMyDialog(context),
+          onPressed: () => _showDeleteDialog(context),
         ),
       ],
     );
   }
 
-  _showMyDialog(BuildContext context) {
-    return showDialog<void>(
+  void _navigateToAddStage(BuildContext context) {
+    // Navigate to the Add Stage screen
+    GoRouter.of(context).push('/add-stage');
+  }
+
+  void _navigateToEditApplication(BuildContext context) {
+    // Navigate to the Edit Application screen
+    GoRouter.of(context).push('/edit-application');
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog<void>(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Delete Application'),
           content: const SingleChildScrollView(
-            child:
-                Text("Are you sure you want to delete this job application?"),
+            child: Text(
+              "Are you sure you want to delete this job application?",
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -202,8 +167,9 @@ class ApplicationStageList extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<JobApplicationStage> stages =
-        useMemoized(() => List.generate(10, (index) => generateStage(1)));
+    final List<JobApplicationStage> stages = useMemoized(
+      () => List.generate(20, (index) => generateStage(index + 1)),
+    );
     return ListView.separated(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.15,
@@ -217,10 +183,7 @@ class ApplicationStageList extends HookWidget {
 }
 
 class ApplicationStageListItem extends StatelessWidget {
-  const ApplicationStageListItem({
-    super.key,
-    required this.stage,
-  });
+  const ApplicationStageListItem({super.key, required this.stage});
 
   final JobApplicationStage stage;
 
@@ -242,7 +205,6 @@ class ApplicationStageListItem extends StatelessWidget {
           ),
           const SizedBox(height: 8.0),
           Wrap(
-            direction: Axis.horizontal,
             spacing: 8.0,
             children: stage.subjects
                 .map(
