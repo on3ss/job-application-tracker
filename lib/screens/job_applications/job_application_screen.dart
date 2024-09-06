@@ -18,34 +18,8 @@ class JobApplicationScreen extends HookWidget {
       appBar: const CustomAppBar(title: "Job Post Name"),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: const JobApplicationFab(),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const JobApplicationInfo(),
-            _buildStagesHeader(context),
-            const Expanded(child: ApplicationStageList()),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStagesHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "STAGES",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(HugeIcons.strokeRoundedFilter),
-          ),
-        ],
+      body: const SafeArea(
+        child: ApplicationStageList(),
       ),
     );
   }
@@ -162,14 +136,46 @@ class ApplicationStageList extends HookWidget {
     final List<JobApplicationStage> stages =
         useMemoized(() => List.generate(20, (index) => generateStage(1)));
 
-    return ListView.separated(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).size.height * 0.15,
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const JobApplicationInfo(),
+              _buildStagesHeader(context),
+            ],
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => ApplicationStageListItem(stage: stages[index]),
+            childCount: stages.length,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+        )
+      ],
+    );
+  }
+
+  Widget _buildStagesHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "STAGES",
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(HugeIcons.strokeRoundedFilter),
+          ),
+        ],
       ),
-      itemBuilder: (context, index) =>
-          ApplicationStageListItem(stage: stages[index]),
-      separatorBuilder: (_, __) => const Divider(),
-      itemCount: stages.length,
     );
   }
 }
@@ -189,43 +195,47 @@ class ApplicationStageListItem extends StatelessWidget {
     final Color primaryColor = Theme.of(context).colorScheme.primary;
     final Color tertiaryColor = Theme.of(context).colorScheme.tertiary;
 
-    return ListTile(
-      title: Text(
-        stage.name,
-        style: titleStyle,
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            stage.description,
-            style: bodyStyle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 8.0),
-          IconWithText(
-            icon: HugeIcons.strokeRoundedBooks02,
-            text: stage.subjects.join(', '),
-          ),
-          const SizedBox(height: 4.0),
-          IconWithText(
-            icon: HugeIcons.strokeRoundedTime04,
-            text: DateFormat('hh:mm a').format(stage.on),
-          ),
-          const SizedBox(height: 4.0),
-          IconWithText(
-            icon: HugeIcons.strokeRoundedCalendar03,
-            text: DateFormat('MMMM d, y').format(stage.on),
-          ),
-        ],
-      ),
-      trailing: Icon(
-        stage.isDone
-            ? HugeIcons.strokeRoundedCheckmarkCircle02
-            : HugeIcons.strokeRoundedLoading01,
-        color: stage.isDone ? primaryColor : tertiaryColor,
-        size: 20.0,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      child: ListTile(
+        tileColor: Theme.of(context).colorScheme.surfaceContainer,
+        title: Text(
+          stage.name,
+          style: titleStyle,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              stage.description,
+              style: bodyStyle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 8.0),
+            IconWithText(
+              icon: HugeIcons.strokeRoundedBooks02,
+              text: stage.subjects.join(', '),
+            ),
+            const SizedBox(height: 4.0),
+            IconWithText(
+              icon: HugeIcons.strokeRoundedTime04,
+              text: DateFormat('hh:mm a').format(stage.on),
+            ),
+            const SizedBox(height: 4.0),
+            IconWithText(
+              icon: HugeIcons.strokeRoundedCalendar03,
+              text: DateFormat('MMMM d, y').format(stage.on),
+            ),
+          ],
+        ),
+        trailing: Icon(
+          stage.isDone
+              ? HugeIcons.strokeRoundedCheckmarkCircle02
+              : HugeIcons.strokeRoundedLoading01,
+          color: stage.isDone ? primaryColor : tertiaryColor,
+          size: 20.0,
+        ),
       ),
     );
   }
