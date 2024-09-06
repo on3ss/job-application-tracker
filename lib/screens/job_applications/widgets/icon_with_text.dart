@@ -19,7 +19,7 @@ class IconWithText extends StatelessWidget {
         Icon(
           icon,
           size: 16,
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
+          color: Theme.of(context).colorScheme.onSurface,
         ),
         const VerticalDivider(width: 8),
         Text(text),
