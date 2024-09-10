@@ -17,7 +17,7 @@ class JobApplicationScreen extends HookWidget {
     return Scaffold(
       appBar: const CustomAppBar(title: "Job Post Name"),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: const JobApplicationFab(),
+      floatingActionButton: JobApplicationFab(),
       body: const SafeArea(
         child: ApplicationStageList(),
       ),
@@ -55,11 +55,13 @@ class JobApplicationInfo extends StatelessWidget {
 }
 
 class JobApplicationFab extends StatelessWidget {
-  const JobApplicationFab({super.key});
+  JobApplicationFab({super.key});
+  final fabKey = GlobalKey<ExpandableFabState>();
 
   @override
   Widget build(BuildContext context) {
     return ExpandableFab(
+      key: fabKey,
       overlayStyle: const ExpandableFabOverlayStyle(blur: 2),
       openButtonBuilder: RotateFloatingActionButtonBuilder(
         child: const Icon(HugeIcons.strokeRoundedRocket01),
@@ -73,7 +75,10 @@ class JobApplicationFab extends StatelessWidget {
     return [
       _buildFabButton(
         icon: HugeIcons.strokeRoundedAdd02,
-        onPressed: () {},
+        onPressed: () {
+          fabKey.currentState?.toggle();
+          context.pushNamed('stage-create');
+        },
       ),
       _buildFabButton(
         icon: HugeIcons.strokeRoundedPencilEdit02,
@@ -83,8 +88,8 @@ class JobApplicationFab extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.error,
         foregroundColor: Theme.of(context).colorScheme.onError,
         heroTag: null,
-        child: const Icon(HugeIcons.strokeRoundedDelete02),
         onPressed: () => _showDeleteDialog(context),
+        child: const Icon(HugeIcons.strokeRoundedDelete02),
       ),
     ];
   }
@@ -220,12 +225,14 @@ class ApplicationStageListItem extends StatelessWidget {
             const SizedBox(height: 4.0),
             IconWithText(
               icon: HugeIcons.strokeRoundedTime04,
-              text: DateFormat('hh:mm a').format(stage.on),
+              text: DateFormat.jm(Localizations.localeOf(context).toString())
+                  .format(stage.on),
             ),
             const SizedBox(height: 4.0),
             IconWithText(
               icon: HugeIcons.strokeRoundedCalendar03,
-              text: DateFormat('MMMM d, y').format(stage.on),
+              text: DateFormat.yMMMd(Localizations.localeOf(context).toString())
+                  .format(stage.on),
             ),
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:job_tracker/screens/home_screen.dart';
 import 'package:job_tracker/screens/job_applications/add_job_application_screen.dart';
+import 'package:job_tracker/screens/job_applications/add_stage.dart';
 import 'package:job_tracker/screens/job_applications/job_application_screen.dart';
 import 'package:job_tracker/screens/job_applications/job_applications_screen.dart';
 import 'package:job_tracker/screens/schedule_screen.dart';
@@ -26,6 +27,10 @@ part "router.g.dart";
       TypedGoRoute<JobsScreenRoute>(path: '/jobs', routes: [
         TypedGoRoute<JobScreenRoute>(path: 'job', name: 'job'),
         TypedGoRoute<JobCreateRoute>(path: 'create', name: 'job-create'),
+        TypedGoRoute<StageCreateRoute>(
+          path: 'stage-create',
+          name: 'stage-create',
+        ),
       ]),
     ],
   ),
@@ -80,6 +85,14 @@ class JobCreateRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) {
     return AddJobApplicationScreen();
+  }
+}
+
+@immutable
+class StageCreateRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const AddApplicationStage();
   }
 }
 
